@@ -2,6 +2,31 @@
 
 CodeGraph 是一個本地程式碼知識圖譜工具，專為 AI 程式碼助理設計，可減少 94% 的工具呼叫並大幅加速程式碼探索。
 
+## 快速開始
+
+從安裝到實際查詢，5 分鐘內完成設定：
+
+1. **安裝**：`npm install -g @colbymchenry/codegraph`
+2. **初始化**：`codegraph init -i && codegraph index`
+3. **查詢**：`codegraph query <函式名>`
+4. **使用**：[simple-todo 範例](./examples/simple-todo/)跟著做
+
+詳細步驟請參考 [Quick Start 章節](#快速開始simple-todo-範例)。
+
+---
+
+## 範例專案
+
+| 專案 | 說明 |
+|------|------|
+| [simple-todo](./examples/simple-todo/) | TypeScript Todo 應用，4 個檔案，27 個節點。包含完整的功能示範與使用情境說明。 |
+
+### 為什麼要用 simple-todo？
+
+- **規模適中**：4 個檔案、27 個節點，足够展示 CodeGraph 功能又不會過於複雜
+- **涵蓋多元情境**：型別定義、localStorage 封裝、CRUD 邏輯
+- **易於理解**：功能性程式碼，無需理解複雜框架
+
 ## GitHub
 
 https://github.com/colbymchenry/codegraph
