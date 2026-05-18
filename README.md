@@ -21,6 +21,115 @@ codegraph install --target=cursor,claude --yes       # 指定目標
 codegraph install --target=auto --location=local     # 專案本地安裝
 ```
 
+## 快速開始（simple-todo 範例）
+
+以 `examples/simple-todo` 為例，從零開始設定 CodeGraph。
+
+### 1. 安裝
+
+```bash
+npm install -g @colbymchenry/codegraph
+```
+
+### 2. 初始化專案
+
+```bash
+cd examples/simple-todo
+codegraph init -i        # 初始化，建立 .codegraph/ 目錄
+codegraph index          # 建立索引（掃描所有支援的檔案）
+```
+
+### 3. 查看索引狀態
+
+```bash
+codegraph status
+# 輸出：
+# Index Statistics:
+#   Files:     4
+#   Nodes:     27
+#   Edges:     40
+```
+
+### 4. 查詢符號
+
+```bash
+# 查詢函式
+codegraph query addTodo
+# 結果：找到 addTodo 定義與所有使用位置
+
+# 查詢型別
+codegraph query Todo
+# 結果：找到 Todo interface 定義與相關檔案
+```
+
+### 5. 查看檔案結構
+
+```bash
+codegraph files
+# 輸出專案的所有檔案及其關係
+```
+
+---
+
+## 使用技巧
+
+### 情境一：搜尋函式定義
+
+**問題**：某個函式在哪裡定義？被哪些地方呼叫？
+
+```bash
+codegraph query <函式名>
+```
+
+### 情境二：建立任務上下文
+
+**問題**：需要修改儲存邏輯，但不知道會影響哪些地方？
+
+在 Claude Code 中召喚 Explore agent：
+```
+Use codegraph_explore to find all code related to "storage" or "save"
+```
+
+### 情境三：追蹤呼叫鏈
+
+**問題**：點擊完成按鈕後發生了什麼？
+
+```bash
+codegraph context "toggle todo"
+# 會輸出相關的函式呼叫鏈與程式碼片段
+```
+
+### 情境四：分析影響範圍
+
+**問題**：修改某個型別會影響哪些檔案？
+
+```bash
+codegraph affected <檔案路徑>
+```
+
+### 情境五：增量更新
+
+當程式碼變更後，不需要重新索引：
+
+```bash
+codegraph sync
+# 或設定 hooks 自動同步
+```
+
+---
+
+## 最佳實踐
+
+| 技巧 | 說明 |
+|------|------|
+| **使用 Explore agent** | 複雜探索時透過 Explore agent 呼叫，避免佔用主 session 上下文 |
+| **定期 sync** | 新增/刪除檔案後執行 `codegraph sync` 保持索引最新 |
+| **自訂排除規則** | 在 `.codegraph/config.json` 中加入 `exclude` 排除大型或無關檔案 |
+| **檢視狀態** | 定期執行 `codegraph status` 確認索引健康 |
+| **查看節點關係** | 使用 `codegraph query` 查看函式/變數的完整呼叫圖 |
+
+---
+
 ## 基本用法
 
 ```bash
